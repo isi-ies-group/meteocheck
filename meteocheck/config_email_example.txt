@@ -1,0 +1,8 @@
+[email_configuration]
+IS_SENDING_EMAIL = True
+RECIPIENTS_EMAIL = recipient@domain.com
+SENDER_EMAIL = sender@domain.com
+SMTP_SERVER = smtp.domain.com
+SMTP_PORT = 587
+LOGIN_EMAIL = sender
+PASSWORD_EMAIL = password

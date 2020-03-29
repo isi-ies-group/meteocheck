@@ -1,0 +1,4 @@
+[stations_configuration]
+UNIT = Z:
+PATH_HELIOS = Estacion_Helios
+PATH_GEONICA = geonica

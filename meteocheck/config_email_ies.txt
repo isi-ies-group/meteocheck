@@ -1,0 +1,8 @@
+[email_configuration]
+IS_SENDING_EMAIL = True
+RECIPIENTS_EMAIL = ruben.nunez@ies.upm.es, m.nenkov@alumnos.upm.es  # It can be several recipients separated by comma
+SENDER_EMAIL = isi.incidencias@ies.upm.es
+SMTP_SERVER = smtp.ies-def.upm.es
+SMTP_PORT = 587
+LOGIN_EMAIL = isi.incidencias
+PASSWORD_EMAIL = 1s1-%__%

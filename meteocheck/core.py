@@ -432,7 +432,7 @@ class Checking:
             condition=(condition_list).all(),
             error_message=('Differential change of column {}'.format(column) +
                            'larger than threshold {}'.format(str(threshold)) +
-                           '. List of values: {}}'.format(self.df[column][~condition_list].to_string().replace('\n', ' - '))),
+                           '. List of values: {}'.format(self.df[column][~condition_list].to_string().replace('\n', ' - '))),
                 check_type=name_check_function,
                 figure=buffer)
 

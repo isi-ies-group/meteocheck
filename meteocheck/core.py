@@ -115,7 +115,7 @@ def finish_log():
     if (log.error_level == 'INFO').all():
         print('\n>> ALL THE LOG ISSUES ARE INFORMATIONAL - NO WARNING EMAIL SHOULD BE SENT')
 
-	working_path = os.getcwd() # tries to read config file from the Current Working Directory where meteocheck is invoked
+    working_path = os.getcwd() # tries to read config file from the Current Working Directory where meteocheck is invoked
 
     log.to_csv(str(Path(working_path, FILENAME_SESSION_LOG)), sep='\t', index=False, header=False, mode='w')
     log.to_csv(str(Path(working_path, FILENAME_HISTORY_LOG)), sep='\t', index=False, header=False, mode='a')

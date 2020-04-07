@@ -21,7 +21,7 @@ setup_args = dict(
     python_requires='>=3.6',
     packages=['meteocheck'],
     zip_safe=False,
-    package_data={'': ['*.txt','*.log']},
+    package_data={'': ['*.log', '*.ini']},
     include_package_data=True,
 )
 

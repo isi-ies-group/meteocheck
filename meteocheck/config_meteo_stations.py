@@ -17,8 +17,8 @@ SUPPORTED_STATIONS = ['helios', 'geonica', 'meteo']
 
 config = configparser.ConfigParser(interpolation=None, inline_comment_prefixes='#')
 
-module_path = os.path.dirname(__file__)
-config.read(str(Path(module_path, 'config_meteo_stations_ies.txt')))
+working_path = os.getcwd() # tries to read config file from the Current Working Directory where meteocheck is invoked
+config.read(str(Path(working_path, 'meteocheck_meteo_stations.ini')))
 
 UNIT = config.get('stations_configuration', 'UNIT')
 
@@ -29,7 +29,7 @@ DATA_PATH_METEO = Path(UNIT, config.get('stations_configuration', 'PATH_METEO'))
 def open_meteo_file(date, type_data_station):
     """
     Tries to automatically open a meteo file of the supported meteo stations.
-    Extended it to supported extra types.
+    Extended it to support extra types.
     """
     if type_data_station == 'helios':
         file_name = 'data' + dt.datetime.strftime(date, '%Y_%m_%d') + '.txt'

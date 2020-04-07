@@ -1,0 +1,6 @@
+TO DO
+- Documentar, descripcion funcion,
+- Un evento CRITICAL no deberia para la ejecución de toda el script, solo la ejecución de la estación correspondiente (hay que evitar que p.ej. que si la 
+
+v0.1.x (unreleased)
+v0.1.0

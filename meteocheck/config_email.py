@@ -16,8 +16,8 @@ from pathlib import Path
 # Configuration files
 config = configparser.ConfigParser(interpolation=None, inline_comment_prefixes='#')
 
-module_path = os.path.dirname(__file__)
-config.read(str(Path(module_path, 'config_email_ies.txt')))
+working_path = os.getcwd() # tries to read config file from the Current Working Directory where meteocheck is invoked
+config.read(str(Path(working_path, 'meteocheck_email.ini')))
 
 IS_SENDING_EMAIL = config.getboolean('email_configuration', 'IS_SENDING_EMAIL')
 RECIPIENTS_EMAIL = config.get('email_configuration', 'RECIPIENTS_EMAIL').split(',') # It can be a list of several

@@ -8,8 +8,8 @@ Created on Thu Jan 19 13:12:43 2017
 MINIMUM_ERROR_LEVEL_TO_SEND_EMAIL = 'WARNING'
 
 # Logs' filenames
-FILENAME_SESSION_LOG = 'session.log'
-FILENAME_HISTORY_LOG = 'history.log'
+FILENAME_SESSION_LOG = 'meteocheck_session.log'
+FILENAME_HISTORY_LOG = 'meteocheck_history.log'
 
 # THRESHOLD for derivative of radiation with respect time. Used when
 # calculating cloudy moments [per minute]

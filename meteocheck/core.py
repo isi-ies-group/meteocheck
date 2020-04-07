@@ -80,17 +80,6 @@ def add_line_log(error_level,
     log = log.append(new_line, ignore_index=True)
 
     # sets 'Catergorial' type so it can be ordered
-    '''
-    log['error_level'] = log['error_level'].astype(
-        'category',
-        categories=[
-            'INFO',
-            'WARNING',
-            'ERROR',
-            'CRITICAL'],
-        ordered=True)
-    '''
-    
     log['error_level'] = pd.Categorical(log['error_level'],
                             categories=[
                                 'INFO',
@@ -100,7 +89,6 @@ def add_line_log(error_level,
                             ordered=True)
     
     print(new_line.to_frame())
-
 
 def finish_log():
     global log
@@ -127,12 +115,10 @@ def finish_log():
     if (log.error_level == 'INFO').all():
         print('\n>> ALL THE LOG ISSUES ARE INFORMATIONAL - NO WARNING EMAIL SHOULD BE SENT')
 
-    module_path = os.path.dirname(__file__)
+	working_path = os.getcwd() # tries to read config file from the Current Working Directory where meteocheck is invoked
 
-    log.to_csv(str(Path(module_path, FILENAME_SESSION_LOG)), sep='\t', index=False, header=False, mode='w')
-    log.to_csv(str(Path(module_path, FILENAME_HISTORY_LOG)), sep='\t', index=False, header=False, mode='a')
-    
-    log.to_html('Z:/log_meteocheck.html')
+    log.to_csv(str(Path(working_path, FILENAME_SESSION_LOG)), sep='\t', index=False, header=False, mode='w')
+    log.to_csv(str(Path(working_path, FILENAME_HISTORY_LOG)), sep='\t', index=False, header=False, mode='a')
     
     pd.reset_option('display.max_colwidth')
 

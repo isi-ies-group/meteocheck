@@ -77,9 +77,9 @@ def solpos(time, latitude=40.45, longitude=-3.73, timezone=+1):
         mom_inc_zz = np.diff(zenith(moment)) > 0
         mom_inc_zz = np.append(mom_inc_zz, mom_inc_zz[-1])
 
-        ang_azimuth[mom_inc_zz] *= -1 # reverses the sign of those moments when zz is increasing. It means that az should be not changing trend
+        ang_azimuth_reversed = ang_azimuth[mom_inc_zz] * -1 # reverses the sign of those moments when zz is increasing. It means that az should be not changing trend
         
-        return ang_azimuth
+        return ang_azimuth_reversed
     
     az, zz = azimuth(time), zenith(time)
     

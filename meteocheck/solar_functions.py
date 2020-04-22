@@ -19,7 +19,7 @@ def solpos(time, latitude=40.45, longitude=-3.73, timezone=+1):
 
     Parameters
     ----------
-    time : pandas.Index.DatetimeIndex o pandas.tslib.Timestamp (1 isntant) civil time
+    time : pandas.Index.DatetimeIndex o pandas.Timestamp (1 isntant) civil time
         List of instants
     latitude : float, default=40.45 (Madrid)
         Latitude of the location in decimal degrees and with sign
@@ -46,7 +46,7 @@ def solpos(time, latitude=40.45, longitude=-3.73, timezone=+1):
     """
 
     # If a single element is received, it will be converted to array
-    if isinstance(time, pd.tslib.Timestamp):
+    if isinstance(time, pd.Timestamp):
         time = pd.DatetimeIndex([time])
         
     def time_from_moment(moment):

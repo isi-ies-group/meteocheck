@@ -29,6 +29,7 @@ install_requires = [
     'numpy',
     'pandas',
     'matplotlib',
+    'keyring',
 ]
 
 if __name__ == '__main__':

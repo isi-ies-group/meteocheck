@@ -25,7 +25,7 @@ SENDER_EMAIL = config.get('email_configuration', 'SENDER_EMAIL')
 SMTP_SERVER = config.get('email_configuration', 'SMTP_SERVER')
 SMTP_PORT = config.getint('email_configuration', 'SMTP_PORT')
 LOGIN_EMAIL = config.get('email_configuration', 'LOGIN_EMAIL')
-PASSWORD_EMAIL = config.get('email_configuration', 'PASSWORD_EMAIL')
+PASSWORD_EMAIL = keyring.get_password("Email", SENDER_EMAIL) # password should be added previously in the "Windows Credential Locker" using the command in CLI: "keyring set Email 'email address'"
 
 
 def send_email(

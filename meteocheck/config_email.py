@@ -12,6 +12,7 @@ from email.mime.image import MIMEImage
 import configparser
 import os
 from pathlib import Path
+import keyring
 
 # Configuration files
 config = configparser.ConfigParser(interpolation=None, inline_comment_prefixes='#')

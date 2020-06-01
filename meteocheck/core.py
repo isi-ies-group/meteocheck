@@ -509,7 +509,7 @@ class Checking:
                 error_level='INFO',
                 check_type=name_check_function,
                 figure=buffer)
-
+            
     def check_radiation_other_source(
             self,
             column,
@@ -616,6 +616,106 @@ class Checking:
             df_joined[column_other].plot(style='r.')
             plt.legend([column, column_other])
             plt.title(name_check_function + ':' + column)
+            plt.suptitle(self.type_data_station, fontsize=18)
+
+            buffer = io.BytesIO()
+            plt.savefig(buffer)
+            buffer.seek(0)
+        
+        irrad_filt = self.df[column][lambda m: m > DNI_RADIATION_THRESHOLD]
+        num_radiation_transitions_value = mc_solar.num_radiation_transitions(irrad_filt)
+
+        if num_radiation_transitions_value < NUM_RADIATION_TRANSITIONS_THRESHOLD:
+            self.assertion_base(
+                condition=condition_list,
+                error_message='Total irradiation from {} is different to {} in more than {}%. It is {:.1f}% while DAILY_IRRADIATION_THRESHOLD is {:.2} kWh/(m2·day)'.format(
+                column,
+                column_other,
+                threshold_pct,
+                diff_radiation,
+                DAILY_IRRADIATION_THRESHOLD),
+                check_type=name_check_function,
+                figure=buffer)
+        else:
+            self.assertion_base(
+                condition=False,
+                error_message='Comparison of total irradiations {} and {} not checked because the number of cloudy moments={} [with a DRADIATION_DT={}] is higher than threshold={}'.format(
+                    column,
+                    column_other,
+                    num_radiation_transitions_value,
+                    DRADIATION_DT,
+                    NUM_RADIATION_TRANSITIONS_THRESHOLD),
+                error_level='INFO',
+                check_type=name_check_function,
+                figure=buffer)
+            
+    def check_same_magnitude_pct_change(
+            self,
+            column,
+            column_other,
+            threshold_pct):
+
+        name_check_function = inspect.getframeinfo(inspect.currentframe()).function
+
+        condition_list = (self.df[column] - self.df[column_other]
+                          ).abs() / self.df[column_other] * 100 < threshold_pct
+
+        buffer = None
+        if not condition_list.all():
+            plt.figure()
+            self.df[column].plot(style='.')
+            self.df[column][~condition_list].plot(style='rP')
+            plt.title(name_check_function + ':' + column + '&' + column_other + ' with thresold_pct=' + str(threshold_pct))
+            plt.suptitle(self.type_data_station, fontsize=18)
+
+            buffer = io.BytesIO()
+            plt.savefig(buffer)
+            buffer.seek(0)
+
+        self.assertion_base(
+            condition=(condition_list).all(),
+            error_message='Percent change [%] of column ' +
+            column +
+            ' samples and threshold ' +
+            str(threshold_pct) +
+            '%. List of values: ' +
+            (
+                self.df[column][
+                    ~condition_list]).to_string().replace(
+                '\n',
+                ' - '),
+            check_type=name_check_function,
+            figure=buffer)
+
+    def check_same_magnitude_total_irradiation(
+            self,
+            column,
+            column_other,
+            threshold_pct):
+
+        name_check_function = inspect.getframeinfo(inspect.currentframe()).function
+
+        irradiation = mc_solar.daily_irradiation(
+            self.df[column], samples_per_hour=self.samples_per_hour)
+        irradiation_other = mc_solar.daily_irradiation(
+            self.df[column_other], samples_per_hour=self.samples_per_hour)
+
+        if irradiation < DAILY_IRRADIATION_THRESHOLD:  # Avoids future errors
+            return None
+
+        diff_radiation = abs(
+            irradiation - irradiation_other) / irradiation * 100
+
+        condition_list = diff_radiation < threshold_pct
+
+        buffer = None
+        
+        if not (condition_list):
+            plt.figure()
+            self.df[column].plot(style='k.')
+            self.df[column_other].plot(style='r.')
+            plt.legend([column, column_other])
+            plt.title(name_check_function + ':' + column + '&' + column_other + ' with thresold_pct=' + str(threshold_pct))
             plt.suptitle(self.type_data_station, fontsize=18)
 
             buffer = io.BytesIO()

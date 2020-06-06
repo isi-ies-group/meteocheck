@@ -683,7 +683,7 @@ class Checking:
                 self.df[column][
                     ~condition_list]).to_string().replace(
                 '\n',
-                ' - '),
+                ' - ')[:1000],
             check_type=name_check_function,
             figure=buffer)
 

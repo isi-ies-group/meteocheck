@@ -649,6 +649,44 @@ class Checking:
                 check_type=name_check_function,
                 figure=buffer)
             
+    def check_same_magnitude_pct_change(
+            self,
+            column,
+            column_other,
+            threshold_pct):
+
+        name_check_function = inspect.getframeinfo(inspect.currentframe()).function
+
+        condition_list = (self.df[column] - self.df[column_other]
+                          ).abs() / self.df[column_other] * 100 < threshold_pct
+
+        buffer = None
+        if not condition_list.all():
+            plt.figure()
+            self.df[column].plot(style='.')
+            self.df[column][~condition_list].plot(style='rP')
+            plt.title(name_check_function + ':' + column + '&' + column_other + ' with thresold_pct=' + str(threshold_pct))
+            plt.suptitle(self.type_data_station, fontsize=18)
+
+            buffer = io.BytesIO()
+            plt.savefig(buffer)
+            buffer.seek(0)
+
+        self.assertion_base(
+            condition=(condition_list).all(),
+            error_message='Percent change [%] of column ' +
+            column +
+            ' samples and threshold ' +
+            str(threshold_pct) +
+            '%. List of values: ' +
+            (
+                self.df[column][
+                    ~condition_list]).to_string().replace(
+                '\n',
+                ' - ')[:1000],
+            check_type=name_check_function,
+            figure=buffer)
+                        
     def check_same_irradiance_pct_change(
             self,
             column,

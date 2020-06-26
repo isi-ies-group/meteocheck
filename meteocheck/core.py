@@ -649,7 +649,7 @@ class Checking:
                 check_type=name_check_function,
                 figure=buffer)
             
-    def check_same_magnitude_pct_change(
+    def check_same_irradiance_pct_change(
             self,
             column,
             column_other,
@@ -657,8 +657,8 @@ class Checking:
 
         name_check_function = inspect.getframeinfo(inspect.currentframe()).function
 
-        condition_list = (self.df[column] - self.df[column_other]
-                          ).abs() / self.df[column_other] * 100 < threshold_pct
+        condition_list = ((self.df[column] - self.df[column_other]
+                          ).abs() / self.df[column_other] * 100 < threshold_pct) and self.df[column] > 100
 
         buffer = None
         if not condition_list.all():

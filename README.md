@@ -1,3 +1,3 @@
 # meteocheck
 Quality control for meteo stations
-> Para instalarlo como paquete: `pip --upgrade install git+https://github.com/isi-ies-group/meteocheck.git`
+> Para instalarlo como paquete: `pip install --upgrade git+https://github.com/isi-ies-group/meteocheck.git`
